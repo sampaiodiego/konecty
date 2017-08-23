@@ -2,10 +2,16 @@ FROM node:4.8
 
 ADD . /app
 
+ENV KONECTY_VERSION 0.5.0
+
 RUN set -x \
-  && cd /app/bundle/programs/server/ \
-  && npm install \
-  && npm cache clear
+ && curl -SLf "https://github.com/sampaiodiego/konecty/releases/download/$KONECTY_VERSION/konecty.tar.gz" \
+ && mkdir /app \
+ && tar -zxf konecty.tar.gz -C /app \
+ && rm konecty.tar.gz \
+ && cd /app/bundle/programs/server/ \
+ && npm install \
+ && npm cache clear
 
 WORKDIR /app/bundle
 
