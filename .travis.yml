@@ -12,10 +12,9 @@ cache:
   - "$HOME/.meteor"
   - "$HOME/.npm"
   - "$HOME/.node-gyp"
-before_install:
+install:
 - if [ ! -e "$HOME/.meteor/meteor" ]; then curl https://install.meteor.com | sed s/--progress-bar/-sL/g
   | /bin/sh; fi
-install:
 - export PATH="$HOME/.meteor:$PATH"
 script:
 - meteor npm install
@@ -29,6 +28,7 @@ deploy:
   on:
     tags: true
 after_deploy:
-  - curl -H "Content-Type: application/json"
-  | --data '{"source_type":"Tag","source_name":"'"$TRAVIS_TAG"'"}'
-  | -X POST "https://registry.hub.docker.com/u/chinello/konecty/trigger/$DOCKERHUBTOKEN/"
+- |
+  curl -H "Content-Type: application/json" \
+  --data '{"source_type":"Tag","source_name":"'"$TRAVIS_TAG"'"}' \
+  -X POST "https://registry.hub.docker.com/u/chinello/konecty/trigger/$DOCKERHUBTOKEN/"
