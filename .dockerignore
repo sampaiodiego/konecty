@@ -1,0 +1,6 @@
+.git
+.gitignore
+.meteor/local
+LICENSE
+README.md
+docker-compose.yml
