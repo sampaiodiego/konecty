@@ -25,6 +25,10 @@ deploy:
   api_key:
     secure: yDyWHGhh7Uynn1RDKP72Zcq2LQmGrNMNmWHulq+2ocQ+HLjHNcQZVDjRT34S79nzjSVSc1l3GRVtpn6cnOXzdH2TMPwb3zVtl+XRq/jJg+4iA6QC5kzcxFryjvPvSScgeTkc4u45eG65VDCKFnPVPakZp7N3PaeL0pNJN4TbrZ1pnuPfbZPI1VNhWz3rHkgR+npc4MNUwT2HpDCZ/sB7/RASXlf9YbSWhpM+R+Muac70VIwlhz81vqGE4ge+KGJKH2fKKOreJMQB7/hrEvMQyr3/ewdDI9XVdm/oMUi45IZab8bBggFaeWaAuLQAkM30h+H2vY7vIlo5eHEK7lo+A1Gpkx8FpCISDjGWIv+ypYPg3NsSoergu0VOgBDZzZ2N5NJ9aZkMCILnS+6FYN3+FTpMG8VWtM10Mfk6EKzIKrcHTiv0UsTTnV+4HTN4DfgFXWzN6gWFd78sPwwm1wMQntz7gznUlAnBpVwfsLN3u1lyYM/e2nj3HXdoGaNrCunlAlKTztEKA8PB0rpvfyn6y20Kw7VuEiNlxFXvURphrnAXvfG5IZttVvbHfV961xMgCQBOhPxOTRs/wlVPuHz8/emG66tUnpnyKaI8w6Ge3T0vB9YeM2uT9447JFV6v3spHyfs2/j5ZGsmH3yZ1Hg8g6VyhT/6uHa8/EugZMrQFfI=
   skip_cleanup: true
-  file: /tmp/build/konecty-github.tar.gz
+  file: /tmp/build/konecty.tar.gz
   on:
     tags: true
+after_deploy:
+  - curl -H "Content-Type: application/json"
+  | --data '{"source_type":"Tag","source_name":"'"$TRAVIS_TAG"'"}'
+  | -X POST "https://registry.hub.docker.com/u/chinello/konecty/trigger/$DOCKERHUBTOKEN/"
