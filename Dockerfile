@@ -1,8 +1,6 @@
 FROM node:4.8
 
-ADD . /app
-
-ENV KONECTY_VERSION 0.5.1
+ENV KONECTY_VERSION 0.5.2
 
 RUN set -x \
  && curl -SLf "https://github.com/sampaiodiego/konecty/releases/download/$KONECTY_VERSION/konecty.tar.gz" -o konecty.tar.gz \
