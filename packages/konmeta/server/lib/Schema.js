@@ -6,22 +6,6 @@ import coreNamespace from '../model/coreNamespace';
 import coreMetaObject from '../model/coreMetaObject';
 import MetaObjects from '../model/MetaObjects';
 
-
-// const fetchNamespaces = async ({_id, parents = []}) => [_id, ...(parents.length ? await fetch(parents): [])].filter((v, index, orig) => orig.indexOf(v) === index);
-
-// async function fetch(names){
-// 	if (process.env.KONMETA_DB_URL) {
-// 		const db = await Db.getConnection();
-// 		cursor = await db.collection('core.Namespace').find({_id: {$in: names}}).toArray();
-// 	} else {
-// 		cursor = coreNamespace.find({_id: {$in: name}}).fetch();
-// 	}
-// 	console.log('cursor ->', cursor);
-
-// 	return Promise.all(cursor.map(fetchNamespaces)).then(values => [].concat.apply([], values));
-// }
-
-
 async function fetchNamespaces(namespaceObject) {
 	let namespaces = [namespaceObject._id];
 
@@ -65,15 +49,7 @@ export default new class Schema {
 	async processNamespaceHierarchy(namespaceObject) {
 		console.log('[konmeta] Processing Namespace Hierarchy ➜'.green, namespaceObject._id.cyan);
 
-		try {
-			const namespaces = await fetchNamespaces(namespaceObject);
-			// const namespaces = await fetch(namespaceObject);
-
-			console.log('namespaces ->', namespaces);
-		} catch (e) {
-			console.error('error ->', e);
-		}
-		process.exit(0);
+		const namespaces = await fetchNamespaces(namespaceObject);
 
 		const metaObjects = this.parseMetaObjects(await getMetaObjects(namespaces));
 

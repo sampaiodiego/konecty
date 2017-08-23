@@ -1,7 +1,7 @@
 Meteor.startup(() => {
 	let admin = Meteor.users.findOne({ username: process.env.KONDATA_ADMIN_USERNAME || 'admin' }, { fields: { _id: 1 }});
 
-	if (false && !admin) {
+	if (!admin) {
 		console.log('[kondata] Create first user');
 
 		const adminId = Accounts.createUser({
@@ -54,7 +54,7 @@ Meteor.startup(() => {
 	if (Models['Group']) {
 		const group = Models['Group'].findOne({ name: 'SYSTEM' });
 
-		if (false && !group) {
+		if (!group) {
 			const newGroup = {
 				"_createdAt" : new Date(),
 				"_createdBy" : {
